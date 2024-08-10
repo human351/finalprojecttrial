@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Video Feed</title>
+    <style>
+        #video-container {
+            display: flex;
+            justify-content: space-around;
+        }
+        .video-feed {
+            width: 45%;
+        }
+    </style>
+</head>
+<body>
+    <div id="video-container">
+        <div class="video-feed">
+            <h2>Original Feed</h2>
+            <img id="original" width="100%" />
+        </div>
+        <div class="video-feed">
+            <h2>Processed Feed</h2>
+            <img id="processed" width="100%" />
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('video_frame', function(data) {
+            document.getElementById('original').src = 'data:image/jpeg;base64,' + data.original;
+            document.getElementById('processed').src = 'data:image/jpeg;base64,' + data.processed;
+        });
+    </script>
+</body>
+</html>
